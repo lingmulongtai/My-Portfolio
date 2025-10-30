@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ling Mulongtai | Photo Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="メインナビゲーション">
+            <div class="brand">
+                <span class="brand__badge">LM</span>
+                <div>
+                    <p class="brand__name">Ling Mulongtai</p>
+                    <p class="brand__role">Photographer</p>
+                </div>
+            </div>
+            <nav class="sidebar__nav" role="tablist" aria-orientation="vertical">
+                <button id="tab-home" class="nav-item is-active" data-target="home" role="tab" aria-selected="true" aria-controls="home">
+                    <span class="icon" aria-hidden="true">🏠</span>
+                    <span>ホーム</span>
+                </button>
+                <button id="tab-gallery" class="nav-item" data-target="gallery" role="tab" aria-selected="false" aria-controls="gallery">
+                    <span class="icon" aria-hidden="true">🖼️</span>
+                    <span>ギャラリー</span>
+                </button>
+                <button id="tab-likes" class="nav-item" data-target="likes" role="tab" aria-selected="false" aria-controls="likes">
+                    <span class="icon" aria-hidden="true">❤️</span>
+                    <span>いいね</span>
+                </button>
+                <button id="tab-downloads" class="nav-item" data-target="downloads" role="tab" aria-selected="false" aria-controls="downloads">
+                    <span class="icon" aria-hidden="true">⬇️</span>
+                    <span>ダウンロード</span>
+                </button>
+                <button id="tab-settings" class="nav-item" data-target="settings" role="tab" aria-selected="false" aria-controls="settings">
+                    <span class="icon" aria-hidden="true">⚙️</span>
+                    <span>設定</span>
+                </button>
+            </nav>
+            <div class="sidebar__footer">
+                <a class="footer-link" href="mailto:hello@lingmulongtai.com">hello@lingmulongtai.com</a>
+                <p class="copyright">© 2025 Ling Mulongtai</p>
+            </div>
+        </aside>
+        <main class="main">
+            <section id="home" class="panel is-visible" role="tabpanel" aria-labelledby="tab-home">
+                <header class="hero">
+                    <div class="hero__background" role="presentation"></div>
+                    <div class="hero__content">
+                        <div class="hero__meta">
+                            <span class="badge">New Collection</span>
+                            <p class="hero__title">Urban Dreams — Tokyo After Dark</p>
+                            <p class="hero__subtitle">光と影のコントラストに魅了される夜の物語。エディトリアル、プリント、プリセットで新しい体験を。</p>
+                            <div class="hero__actions">
+                                <button class="btn btn--primary">ポートフォリオをダウンロード</button>
+                                <button class="btn btn--ghost">プリントを購入</button>
+                                <button class="btn btn--ghost">プリセットをチェック</button>
+                            </div>
+                        </div>
+                        <div class="hero__stats">
+                            <div>
+                                <p class="stat__value">120+</p>
+                                <p class="stat__label">都市写真</p>
+                            </div>
+                            <div>
+                                <p class="stat__value">35</p>
+                                <p class="stat__label">エディトリアル</p>
+                            </div>
+                            <div>
+                                <p class="stat__value">18</p>
+                                <p class="stat__label">Lightroom プリセット</p>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="home__quick-links">
+                    <div class="quick-card">
+                        <h3>最新のプリント</h3>
+                        <p>限定20枚のサイン入りプリント。メタリックペーパー仕上げ。</p>
+                        <a href="#downloads" class="chip">今すぐチェック</a>
+                    </div>
+                    <div class="quick-card">
+                        <h3>映像制作の依頼</h3>
+                        <p>ブランドムービー・ミュージックビデオなど、映像制作も承っています。</p>
+                        <a href="mailto:hello@lingmulongtai.com" class="chip">コンタクト</a>
+                    </div>
+                    <div class="quick-card">
+                        <h3>公開プリセット</h3>
+                        <p>ナイトシネマ、朝焼け、砂の記憶など人気プリセットを配布中。</p>
+                        <a href="#downloads" class="chip">ダウンロード</a>
+                    </div>
+                </section>
+
+                <section class="home__recommendations">
+                    <header class="recommendations__header">
+                        <div>
+                            <h2>注目のシリーズ</h2>
+                            <p>今週の人気作品とシネマカラーのプリセットをピックアップ。</p>
+                        </div>
+                        <button class="btn btn--ghost">すべて見る</button>
+                    </header>
+                    <div class="recommend-grid">
+                        <article class="recommend-card">
+                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=600&q=80" alt="City skyline at night" loading="lazy">
+                            <div class="recommend-card__body">
+                                <h3>Velvet Nights</h3>
+                                <p>濃淡を活かしたハイコントラストな夜景シリーズ。プリントとRAWを提供。</p>
+                                <div class="recommend-card__actions">
+                                    <button class="chip">プリント</button>
+                                    <button class="chip">RAWデータ</button>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="recommend-card">
+                            <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=600&q=80" alt="Lightroom presets preview" loading="lazy">
+                            <div class="recommend-card__body">
+                                <h3>Neon Bloom Presets</h3>
+                                <p>光の滲みを演出する5種のプリセット。ハイライトを柔らかく仕上げます。</p>
+                                <div class="recommend-card__actions">
+                                    <button class="chip">プリセット</button>
+                                    <button class="chip">試用版</button>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="recommend-card">
+                            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80" alt="Portrait photography" loading="lazy">
+                            <div class="recommend-card__body">
+                                <h3>Soft Echo Portraits</h3>
+                                <p>フィルムライクなトーンで仕上げたポートレートセット。編集プリセット付き。</p>
+                                <div class="recommend-card__actions">
+                                    <button class="chip">プリント</button>
+                                    <button class="chip">プリセット</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="home__social">
+                    <h2>フォローして新作をチェック</h2>
+                    <div class="social-links">
+                        <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
+                            <span aria-hidden="true">📸</span>
+                            Instagram
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="X (Twitter)">
+                            <span aria-hidden="true">🕊️</span>
+                            X (Twitter)
+                        </a>
+                        <a href="https://behance.net" target="_blank" rel="noreferrer" aria-label="Behance">
+                            <span aria-hidden="true">🎨</span>
+                            Behance
+                        </a>
+                        <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
+                            <span aria-hidden="true">▶️</span>
+                            YouTube
+                        </a>
+                    </div>
+                </section>
+            </section>
+            <section id="gallery" class="panel" role="tabpanel" aria-labelledby="tab-gallery">
+                <header class="panel__header">
+                    <div>
+                        <h1>Photo Gallery</h1>
+                        <p>シリーズごとに厳選した作品をまとめています。</p>
+                    </div>
+                    <div class="filters">
+                        <button class="chip is-active">All</button>
+                        <button class="chip">Night</button>
+                        <button class="chip">City</button>
+                        <button class="chip">Portrait</button>
+                        <button class="chip">Travel</button>
+                    </div>
+                </header>
+                <div class="grid gallery-grid">
+                    <article class="gallery-card">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=80" alt="Neon lights in Tokyo alley" loading="lazy">
+                        <div class="gallery-card__body">
+                            <h3>Neon Arcs</h3>
+                            <p>夜の渋谷で撮影。雨の反射が幻想的な光跡を描きます。</p>
+                            <button class="btn btn--secondary">プリントを購入</button>
+                        </div>
+                    </article>
+                    <article class="gallery-card">
+                        <img src="https://images.unsplash.com/photo-1526401281623-7ae98b86e006?auto=format&fit=crop&w=1000&q=80" alt="Portrait with vibrant lights" loading="lazy">
+                        <div class="gallery-card__body">
+                            <h3>Chromatic Souls</h3>
+                            <p>カラーグレーディングで映画的な雰囲気を演出したポートレート。</p>
+                            <button class="btn btn--secondary">プリントを購入</button>
+                        </div>
+                    </article>
+                    <article class="gallery-card">
+                        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80" alt="City skyline at dusk" loading="lazy">
+                        <div class="gallery-card__body">
+                            <h3>Skyline Fade</h3>
+                            <p>夕暮れのソウル。アナログとデジタルの境界を追い求めたシリーズ。</p>
+                            <button class="btn btn--secondary">プリントを購入</button>
+                        </div>
+                    </article>
+                    <article class="gallery-card">
+                        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80" alt="Mountain landscape" loading="lazy">
+                        <div class="gallery-card__body">
+                            <h3>Misty Trails</h3>
+                            <p>北海道の山岳地帯で撮影。霧の中から現れる光。</p>
+                            <button class="btn btn--secondary">プリントを購入</button>
+                        </div>
+                    </article>
+                    <article class="gallery-card">
+                        <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1000&q=80" alt="Street photography" loading="lazy">
+                        <div class="gallery-card__body">
+                            <h3>Street Tones</h3>
+                            <p>香港の下町。人々の息遣いが感じられるストリートスナップ。</p>
+                            <button class="btn btn--secondary">プリントを購入</button>
+                        </div>
+                    </article>
+                    <article class="gallery-card">
+                        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1000&q=80" alt="Colorful lights" loading="lazy">
+                        <div class="gallery-card__body">
+                            <h3>Neon Bloom</h3>
+                            <p>アートインスタレーションを独自の色彩感覚で捉えた作品。</p>
+                            <button class="btn btn--secondary">プリントを購入</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section id="likes" class="panel" role="tabpanel" aria-labelledby="tab-likes">
+                <header class="panel__header">
+                    <div>
+                        <h1>Favorites</h1>
+                        <p>人気の作品とプリセットへのアクセス。</p>
+                    </div>
+                    <button class="btn btn--ghost">すべてクリア</button>
+                </header>
+                <div class="stack">
+                    <article class="favorite">
+                        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Aurora over the sea" loading="lazy">
+                        <div class="favorite__body">
+                            <p class="favorite__category">プリント</p>
+                            <h3>Aurora Dreamscape</h3>
+                            <p>北欧で撮影したオーロラシリーズ。限定プリント残り5部。</p>
+                        </div>
+                        <div class="favorite__actions">
+                            <button class="btn btn--secondary">購入</button>
+                            <button class="btn btn--ghost">シェア</button>
+                        </div>
+                    </article>
+                    <article class="favorite">
+                        <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=600&q=80" alt="Preset preview" loading="lazy">
+                        <div class="favorite__body">
+                            <p class="favorite__category">プリセット</p>
+                            <h3>Night Cinema Pack</h3>
+                            <p>夜景写真に特化した10種類のLightroomプリセット。</p>
+                        </div>
+                        <div class="favorite__actions">
+                            <button class="btn btn--secondary">ダウンロード</button>
+                            <button class="btn btn--ghost">詳細</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section id="downloads" class="panel" role="tabpanel" aria-labelledby="tab-downloads">
+                <header class="panel__header">
+                    <div>
+                        <h1>Downloads & Shop</h1>
+                        <p>ハイレゾ写真データと編集プリセットを提供しています。</p>
+                    </div>
+                    <button class="btn btn--primary">カートを見る</button>
+                </header>
+                <div class="grid download-grid">
+                    <article class="download-card">
+                        <div class="download-card__badge">Photo Pack</div>
+                        <h3>Neon Nights Vol.2</h3>
+                        <p>東京、香港、ソウルで撮影したRAWデータ15点。解像度8K。</p>
+                        <ul>
+                            <li>RAW + JPEG ファイル</li>
+                            <li>商用利用ライセンス</li>
+                            <li>カラーグレードサンプル</li>
+                        </ul>
+                        <div class="download-card__footer">
+                            <p class="price">¥8,800</p>
+                            <button class="btn btn--secondary">カートに追加</button>
+                        </div>
+                    </article>
+                    <article class="download-card">
+                        <div class="download-card__badge">Preset Pack</div>
+                        <h3>Urban Fade Presets</h3>
+                        <p>Lightroom & Capture One 対応のプリセット12種セット。</p>
+                        <ul>
+                            <li>夜景/街灯に最適化</li>
+                            <li>肌色保護プロファイル</li>
+                            <li>ワンクリックでフィルムライク</li>
+                        </ul>
+                        <div class="download-card__footer">
+                            <p class="price">¥5,400</p>
+                            <button class="btn btn--secondary">ダウンロード</button>
+                        </div>
+                    </article>
+                    <article class="download-card">
+                        <div class="download-card__badge">Bundle</div>
+                        <h3>Portfolio Starter Bundle</h3>
+                        <p>人気プリント3枚 + プリセット5種 + メイキング動画。</p>
+                        <ul>
+                            <li>A3プリント (サイン入り)</li>
+                            <li>制作舞台裏の動画</li>
+                            <li>限定Discordコミュニティ招待</li>
+                        </ul>
+                        <div class="download-card__footer">
+                            <p class="price">¥12,000</p>
+                            <button class="btn btn--secondary">詳細</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section id="settings" class="panel" role="tabpanel" aria-labelledby="tab-settings">
+                <header class="panel__header">
+                    <div>
+                        <h1>Settings</h1>
+                        <p>通知、言語、サブスクリプションを管理。</p>
+                    </div>
+                </header>
+                <form class="settings-form">
+                    <fieldset>
+                        <legend>通知</legend>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <span class="toggle__indicator"></span>
+                            新作コレクションの通知を受け取る
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox">
+                            <span class="toggle__indicator"></span>
+                            プリセットのアップデート情報
+                        </label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>言語</legend>
+                        <div class="select">
+                            <select>
+                                <option>日本語</option>
+                                <option>English</option>
+                                <option>中文</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>プロファイル</legend>
+                        <label class="text-field">
+                            <span>メールアドレス</span>
+                            <input type="email" value="hello@lingmulongtai.com">
+                        </label>
+                        <label class="text-field">
+                            <span>ポートフォリオURL</span>
+                            <input type="url" value="https://lingmulongtai.com">
+                        </label>
+                    </fieldset>
+                    <div class="settings-form__actions">
+                        <button type="submit" class="btn btn--primary">保存する</button>
+                        <button type="button" class="btn btn--ghost">キャンセル</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js" defer></script>
+</body>
+</html>
