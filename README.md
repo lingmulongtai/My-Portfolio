@@ -1,4 +1,4 @@
-# Ling Mulongtai Photo Portfolio Prototype
+# My Photo Portfolio Prototype
 
 ダークガラス調のUIで構成された写真ポートフォリオのプロトタイプです。左タブで主要セクションを切り替えながら、写真作品の閲覧・ダウンロード・購入、編集プリセットの販売導線を確認できます。
 
