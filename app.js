@@ -6,11 +6,13 @@ const setActiveLink = (sectionId) => {
   navLinks.forEach((link) => {
     const isActive = link.dataset.section === sectionId;
     link.classList.toggle('is-active', isActive);
+    link.setAttribute('aria-current', isActive ? 'page' : 'false');
   });
 
   quickLinks.forEach((link) => {
     const href = link.getAttribute('href').replace('#', '');
     link.classList.toggle('is-active', href === sectionId);
+    link.setAttribute('aria-current', href === sectionId ? 'true' : 'false');
   });
 };
 
