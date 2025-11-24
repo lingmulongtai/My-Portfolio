@@ -3,368 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ling Mulongtai | Photo Portfolio</title>
+    <title>Ling Mulongtai | Photographer Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="app-shell">
-        <aside class="sidebar" aria-label="メインナビゲーション">
-            <div class="brand">
-                <span class="brand__badge">LM</span>
-                <div>
-                    <p class="brand__name">Ling Mulongtai</p>
-                    <p class="brand__role">Photographer</p>
+    <div class="page-shell">
+        <aside class="sidebar-left" aria-label="サイドナビゲーション">
+            <div class="profile-card">
+                <div class="profile-card__avatar">
+                    <img src="concept/1bb5fbb4fed304f3df17c59f3218bf7c.jpg" alt="Ling Mulongtai">
+                </div>
+                <div class="profile-card__body">
+                    <p class="eyebrow">Hi There!</p>
+                    <h1>I'm <span>Ling</span></h1>
+                    <p class="role">Photographer / Visual Designer</p>
+                    <a class="btn btn--dark" href="#about">More About Me</a>
                 </div>
             </div>
-            <nav class="sidebar__nav" role="tablist" aria-orientation="vertical">
-                <button id="tab-home" class="nav-item is-active" data-target="home" role="tab" aria-selected="true" aria-controls="home">
-                    <span class="icon" aria-hidden="true">🏠</span>
-                    <span>ホーム</span>
-                </button>
-                <button id="tab-gallery" class="nav-item" data-target="gallery" role="tab" aria-selected="false" aria-controls="gallery">
-                    <span class="icon" aria-hidden="true">🖼️</span>
-                    <span>ギャラリー</span>
-                </button>
-                <button id="tab-likes" class="nav-item" data-target="likes" role="tab" aria-selected="false" aria-controls="likes">
-                    <span class="icon" aria-hidden="true">❤️</span>
-                    <span>いいね</span>
-                </button>
-                <button id="tab-downloads" class="nav-item" data-target="downloads" role="tab" aria-selected="false" aria-controls="downloads">
-                    <span class="icon" aria-hidden="true">⬇️</span>
-                    <span>ダウンロード</span>
-                </button>
-                <button id="tab-settings" class="nav-item" data-target="settings" role="tab" aria-selected="false" aria-controls="settings">
-                    <span class="icon" aria-hidden="true">⚙️</span>
-                    <span>設定</span>
-                </button>
+            <nav class="main-nav" role="navigation">
+                <a href="#home" class="nav-link is-active" data-section="home">Home</a>
+                <a href="#about" class="nav-link" data-section="about">About Me</a>
+                <a href="#resume" class="nav-link" data-section="resume">Resume</a>
+                <a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a>
+                <a href="#testimonials" class="nav-link" data-section="testimonials">Testimonials</a>
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
             </nav>
-            <div class="sidebar__footer">
-                <a class="footer-link" href="mailto:hello@lingmulongtai.com">hello@lingmulongtai.com</a>
-                <p class="copyright">© 2025 Ling Mulongtai</p>
-            </div>
         </aside>
-        <main class="main">
-            <section id="home" class="panel is-visible" role="tabpanel" aria-labelledby="tab-home">
-                <header class="hero">
-                    <div class="hero__background" role="presentation"></div>
-                    <div class="hero__content">
-                        <div class="hero__meta">
-                            <span class="badge">New Collection</span>
-                            <p class="hero__title">Urban Dreams — Tokyo After Dark</p>
-                            <p class="hero__subtitle">光と影のコントラストに魅了される夜の物語。エディトリアル、プリント、プリセットで新しい体験を。</p>
-                            <div class="hero__actions">
-                                <button class="btn btn--primary">ポートフォリオをダウンロード</button>
-                                <button class="btn btn--ghost">プリントを購入</button>
-                                <button class="btn btn--ghost">プリセットをチェック</button>
-                            </div>
-                        </div>
-                        <div class="hero__stats">
-                            <div>
-                                <p class="stat__value">120+</p>
-                                <p class="stat__label">都市写真</p>
-                            </div>
-                            <div>
-                                <p class="stat__value">35</p>
-                                <p class="stat__label">エディトリアル</p>
-                            </div>
-                            <div>
-                                <p class="stat__value">18</p>
-                                <p class="stat__label">Lightroom プリセット</p>
-                            </div>
-                        </div>
-                    </div>
-                </header>
 
-                <section class="home__quick-links">
-                    <div class="quick-card">
-                        <h3>最新のプリント</h3>
-                        <p>限定20枚のサイン入りプリント。メタリックペーパー仕上げ。</p>
-                        <a href="#downloads" class="chip">今すぐチェック</a>
+        <main class="content">
+            <section id="home" class="section hero" aria-label="ホーム">
+                <div class="hero__text">
+                    <p class="eyebrow">Ready for your next visual story</p>
+                    <h2>I'm <span>Ling Mulongtai</span></h2>
+                    <p class="lead">グラフィック×フォトグラフィーで、ブランドやアーティストの世界観を鮮やかに描き出します。ポートレート、ファッション、ミニマルなアートディレクションを得意としています。</p>
+                    <div class="hero__cta">
+                        <a class="btn btn--primary" href="#portfolio">View Portfolio</a>
+                        <a class="btn btn--ghost" href="#contact">Let's Talk</a>
                     </div>
-                    <div class="quick-card">
-                        <h3>映像制作の依頼</h3>
-                        <p>ブランドムービー・ミュージックビデオなど、映像制作も承っています。</p>
-                        <a href="mailto:hello@lingmulongtai.com" class="chip">コンタクト</a>
-                    </div>
-                    <div class="quick-card">
-                        <h3>公開プリセット</h3>
-                        <p>ナイトシネマ、朝焼け、砂の記憶など人気プリセットを配布中。</p>
-                        <a href="#downloads" class="chip">ダウンロード</a>
-                    </div>
-                </section>
-
-                <section class="home__recommendations">
-                    <header class="recommendations__header">
-                        <div>
-                            <h2>注目のシリーズ</h2>
-                            <p>今週の人気作品とシネマカラーのプリセットをピックアップ。</p>
-                        </div>
-                        <button class="btn btn--ghost">すべて見る</button>
-                    </header>
-                    <div class="recommend-grid">
-                        <article class="recommend-card">
-                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=600&q=80" alt="City skyline at night" loading="lazy">
-                            <div class="recommend-card__body">
-                                <h3>Velvet Nights</h3>
-                                <p>濃淡を活かしたハイコントラストな夜景シリーズ。プリントとRAWを提供。</p>
-                                <div class="recommend-card__actions">
-                                    <button class="chip">プリント</button>
-                                    <button class="chip">RAWデータ</button>
-                                </div>
-                            </div>
+                    <div class="hero__stats">
+                        <article>
+                            <p class="stat__value">10+</p>
+                            <p class="stat__label">Years Experience</p>
                         </article>
-                        <article class="recommend-card">
-                            <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=600&q=80" alt="Lightroom presets preview" loading="lazy">
-                            <div class="recommend-card__body">
-                                <h3>Neon Bloom Presets</h3>
-                                <p>光の滲みを演出する5種のプリセット。ハイライトを柔らかく仕上げます。</p>
-                                <div class="recommend-card__actions">
-                                    <button class="chip">プリセット</button>
-                                    <button class="chip">試用版</button>
-                                </div>
-                            </div>
+                        <article>
+                            <p class="stat__value">450+</p>
+                            <p class="stat__label">Projects Completed</p>
                         </article>
-                        <article class="recommend-card">
-                            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80" alt="Portrait photography" loading="lazy">
-                            <div class="recommend-card__body">
-                                <h3>Soft Echo Portraits</h3>
-                                <p>フィルムライクなトーンで仕上げたポートレートセット。編集プリセット付き。</p>
-                                <div class="recommend-card__actions">
-                                    <button class="chip">プリント</button>
-                                    <button class="chip">プリセット</button>
-                                </div>
-                            </div>
+                        <article>
+                            <p class="stat__value">650K</p>
+                            <p class="stat__label">Followers</p>
                         </article>
                     </div>
-                </section>
-
-                <section class="home__social">
-                    <h2>フォローして新作をチェック</h2>
-                    <div class="social-links">
-                        <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
-                            <span aria-hidden="true">📸</span>
-                            Instagram
-                        </a>
-                        <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="X (Twitter)">
-                            <span aria-hidden="true">🕊️</span>
-                            X (Twitter)
-                        </a>
-                        <a href="https://behance.net" target="_blank" rel="noreferrer" aria-label="Behance">
-                            <span aria-hidden="true">🎨</span>
-                            Behance
-                        </a>
-                        <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
-                            <span aria-hidden="true">▶️</span>
-                            YouTube
-                        </a>
+                </div>
+                <div class="hero__portrait">
+                    <div class="circle-frame">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80" alt="Creative portrait">
                     </div>
-                </section>
+                    <ul class="hero__icons" aria-label="主要サービス">
+                        <li>📸</li>
+                        <li>🎨</li>
+                        <li>🖥️</li>
+                        <li>✈️</li>
+                        <li>🎬</li>
+                    </ul>
+                </div>
             </section>
-            <section id="gallery" class="panel" role="tabpanel" aria-labelledby="tab-gallery">
-                <header class="panel__header">
-                    <div>
-                        <h1>Photo Gallery</h1>
-                        <p>シリーズごとに厳選した作品をまとめています。</p>
-                    </div>
-                    <div class="filters">
-                        <button class="chip is-active">All</button>
-                        <button class="chip">Night</button>
-                        <button class="chip">City</button>
-                        <button class="chip">Portrait</button>
-                        <button class="chip">Travel</button>
-                    </div>
+
+            <section id="about" class="section about" aria-label="自己紹介">
+                <header class="section__header">
+                    <p class="eyebrow">About Me</p>
+                    <h2>グラフィックデザインと写真でブランドに命を吹き込む</h2>
+                    <p>東京を拠点に活動するフォトグラファー兼アートディレクター。編集誌、アパレルブランド、ミュージシャンと共に、ビジュアルストーリーテリングを軸としたプロジェクトを推進しています。</p>
                 </header>
-                <div class="grid gallery-grid">
-                    <article class="gallery-card">
-                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=80" alt="Neon lights in Tokyo alley" loading="lazy">
-                        <div class="gallery-card__body">
-                            <h3>Neon Arcs</h3>
-                            <p>夜の渋谷で撮影。雨の反射が幻想的な光跡を描きます。</p>
-                            <button class="btn btn--secondary">プリントを購入</button>
-                        </div>
+                <div class="about__grid">
+                    <article>
+                        <h3>What I do</h3>
+                        <ul>
+                            <li><span>Print Design</span> — キービジュアルやパッケージを鮮烈な色彩で表現。</li>
+                            <li><span>Web Direction</span> — モダンUIと写真を掛け合わせたブランドサイト制作。</li>
+                            <li><span>Photography</span> — ファッション、ポートレート、ルックブック撮影。</li>
+                        </ul>
                     </article>
-                    <article class="gallery-card">
-                        <img src="https://images.unsplash.com/photo-1526401281623-7ae98b86e006?auto=format&fit=crop&w=1000&q=80" alt="Portrait with vibrant lights" loading="lazy">
-                        <div class="gallery-card__body">
-                            <h3>Chromatic Souls</h3>
-                            <p>カラーグレーディングで映画的な雰囲気を演出したポートレート。</p>
-                            <button class="btn btn--secondary">プリントを購入</button>
-                        </div>
-                    </article>
-                    <article class="gallery-card">
-                        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80" alt="City skyline at dusk" loading="lazy">
-                        <div class="gallery-card__body">
-                            <h3>Skyline Fade</h3>
-                            <p>夕暮れのソウル。アナログとデジタルの境界を追い求めたシリーズ。</p>
-                            <button class="btn btn--secondary">プリントを購入</button>
-                        </div>
-                    </article>
-                    <article class="gallery-card">
-                        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80" alt="Mountain landscape" loading="lazy">
-                        <div class="gallery-card__body">
-                            <h3>Misty Trails</h3>
-                            <p>北海道の山岳地帯で撮影。霧の中から現れる光。</p>
-                            <button class="btn btn--secondary">プリントを購入</button>
-                        </div>
-                    </article>
-                    <article class="gallery-card">
-                        <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1000&q=80" alt="Street photography" loading="lazy">
-                        <div class="gallery-card__body">
-                            <h3>Street Tones</h3>
-                            <p>香港の下町。人々の息遣いが感じられるストリートスナップ。</p>
-                            <button class="btn btn--secondary">プリントを購入</button>
-                        </div>
-                    </article>
-                    <article class="gallery-card">
-                        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1000&q=80" alt="Colorful lights" loading="lazy">
-                        <div class="gallery-card__body">
-                            <h3>Neon Bloom</h3>
-                            <p>アートインスタレーションを独自の色彩感覚で捉えた作品。</p>
-                            <button class="btn btn--secondary">プリントを購入</button>
+                    <article>
+                        <h3>Fun Facts</h3>
+                        <div class="about__stats">
+                            <p><strong>65</strong> Awards Won</p>
+                            <p><strong>300+</strong> Happy Clients</p>
+                            <p><strong>+10</strong> New videos each month</p>
                         </div>
                     </article>
                 </div>
             </section>
-            <section id="likes" class="panel" role="tabpanel" aria-labelledby="tab-likes">
-                <header class="panel__header">
-                    <div>
-                        <h1>Favorites</h1>
-                        <p>人気の作品とプリセットへのアクセス。</p>
-                    </div>
-                    <button class="btn btn--ghost">すべてクリア</button>
+
+            <section id="resume" class="section resume" aria-label="経歴">
+                <header class="section__header">
+                    <p class="eyebrow">Resume</p>
+                    <h2>経験とスキル</h2>
                 </header>
-                <div class="stack">
-                    <article class="favorite">
-                        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Aurora over the sea" loading="lazy">
-                        <div class="favorite__body">
-                            <p class="favorite__category">プリント</p>
-                            <h3>Aurora Dreamscape</h3>
-                            <p>北欧で撮影したオーロラシリーズ。限定プリント残り5部。</p>
-                        </div>
-                        <div class="favorite__actions">
-                            <button class="btn btn--secondary">購入</button>
-                            <button class="btn btn--ghost">シェア</button>
-                        </div>
+                <div class="resume__columns">
+                    <article>
+                        <h3>Education</h3>
+                        <ul class="timeline">
+                            <li>
+                                <div>
+                                    <p class="timeline__title">BA Visual Communication</p>
+                                    <p class="timeline__meta">Parsons School of Design (2014)</p>
+                                </div>
+                                <p class="timeline__desc">色彩理論とブランドエクスペリエンスにフォーカス。</p>
+                            </li>
+                            <li>
+                                <div>
+                                    <p class="timeline__title">Exchange Program</p>
+                                    <p class="timeline__meta">Tokyo University of the Arts (2013)</p>
+                                </div>
+                                <p class="timeline__desc">日本的な美しく簡潔な構図を学ぶ。</p>
+                            </li>
+                        </ul>
                     </article>
-                    <article class="favorite">
-                        <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=600&q=80" alt="Preset preview" loading="lazy">
-                        <div class="favorite__body">
-                            <p class="favorite__category">プリセット</p>
-                            <h3>Night Cinema Pack</h3>
-                            <p>夜景写真に特化した10種類のLightroomプリセット。</p>
-                        </div>
-                        <div class="favorite__actions">
-                            <button class="btn btn--secondary">ダウンロード</button>
-                            <button class="btn btn--ghost">詳細</button>
-                        </div>
+                    <article>
+                        <h3>Experience</h3>
+                        <ul class="timeline">
+                            <li>
+                                <div>
+                                    <p class="timeline__title">Lead Photographer</p>
+                                    <p class="timeline__meta">Freelance / 2018 - Present</p>
+                                </div>
+                                <p class="timeline__desc">グローバルブランドとコラボし、キャンペーン撮影から映像ディレクションまで担当。</p>
+                            </li>
+                            <li>
+                                <div>
+                                    <p class="timeline__title">Art Director</p>
+                                    <p class="timeline__meta">Neon Studio / 2015 - 2018</p>
+                                </div>
+                                <p class="timeline__desc">デジタル広告・ビジュアル制作チームの立ち上げとマネジメント。</p>
+                            </li>
+                        </ul>
                     </article>
                 </div>
             </section>
-            <section id="downloads" class="panel" role="tabpanel" aria-labelledby="tab-downloads">
-                <header class="panel__header">
-                    <div>
-                        <h1>Downloads & Shop</h1>
-                        <p>ハイレゾ写真データと編集プリセットを提供しています。</p>
-                    </div>
-                    <button class="btn btn--primary">カートを見る</button>
+
+            <section id="portfolio" class="section portfolio" aria-label="作品">
+                <header class="section__header">
+                    <p class="eyebrow">Portfolio</p>
+                    <h2>Print / Web / Photography</h2>
                 </header>
-                <div class="grid download-grid">
-                    <article class="download-card">
-                        <div class="download-card__badge">Photo Pack</div>
-                        <h3>Neon Nights Vol.2</h3>
-                        <p>東京、香港、ソウルで撮影したRAWデータ15点。解像度8K。</p>
-                        <ul>
-                            <li>RAW + JPEG ファイル</li>
-                            <li>商用利用ライセンス</li>
-                            <li>カラーグレードサンプル</li>
-                        </ul>
-                        <div class="download-card__footer">
-                            <p class="price">¥8,800</p>
-                            <button class="btn btn--secondary">カートに追加</button>
-                        </div>
+                <div class="portfolio__filters">
+                    <button class="filter-chip is-active">All</button>
+                    <button class="filter-chip">Print Design</button>
+                    <button class="filter-chip">Web Design</button>
+                    <button class="filter-chip">Photography</button>
+                </div>
+                <div class="portfolio__grid">
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=800&q=80" alt="Magazine layout">
+                        <figcaption>Editorial / Print</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?auto=format&fit=crop&w=800&q=80" alt="Website design">
+                        <figcaption>Web Rebrand</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" alt="Portrait shoot">
+                        <figcaption>Portrait Series</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" alt="Fashion lookbook">
+                        <figcaption>Lookbook</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="testimonials" class="section testimonials" aria-label="推薦文">
+                <header class="section__header">
+                    <p class="eyebrow">Testimonials</p>
+                    <h2>クライアントの声</h2>
+                </header>
+                <div class="testimonials__grid">
+                    <article class="testimonial-card">
+                        <p class="testimonial__quote">“コンセプト段階から撮影まで一気通貫で支援してくれた。視覚アイデンティティが一新された。”</p>
+                        <p class="testimonial__author">Oliver — Creative Director</p>
                     </article>
-                    <article class="download-card">
-                        <div class="download-card__badge">Preset Pack</div>
-                        <h3>Urban Fade Presets</h3>
-                        <p>Lightroom & Capture One 対応のプリセット12種セット。</p>
-                        <ul>
-                            <li>夜景/街灯に最適化</li>
-                            <li>肌色保護プロファイル</li>
-                            <li>ワンクリックでフィルムライク</li>
-                        </ul>
-                        <div class="download-card__footer">
-                            <p class="price">¥5,400</p>
-                            <button class="btn btn--secondary">ダウンロード</button>
-                        </div>
+                    <article class="testimonial-card">
+                        <p class="testimonial__quote">“撮影現場の空気を柔らかくしながら、緻密なディレクションで最高の表情を引き出してくれる。”</p>
+                        <p class="testimonial__author">Janny — Fashion Stylist</p>
                     </article>
-                    <article class="download-card">
-                        <div class="download-card__badge">Bundle</div>
-                        <h3>Portfolio Starter Bundle</h3>
-                        <p>人気プリント3枚 + プリセット5種 + メイキング動画。</p>
-                        <ul>
-                            <li>A3プリント (サイン入り)</li>
-                            <li>制作舞台裏の動画</li>
-                            <li>限定Discordコミュニティ招待</li>
-                        </ul>
-                        <div class="download-card__footer">
-                            <p class="price">¥12,000</p>
-                            <button class="btn btn--secondary">詳細</button>
-                        </div>
+                    <article class="testimonial-card">
+                        <p class="testimonial__quote">“SNSキャンペーンで使用した写真が話題になり、フォロワーが倍増。スピード感も抜群。”</p>
+                        <p class="testimonial__author">Luna — Brand Manager</p>
                     </article>
                 </div>
             </section>
-            <section id="settings" class="panel" role="tabpanel" aria-labelledby="tab-settings">
-                <header class="panel__header">
-                    <div>
-                        <h1>Settings</h1>
-                        <p>通知、言語、サブスクリプションを管理。</p>
-                    </div>
+
+            <section id="contact" class="section contact" aria-label="問い合わせ">
+                <header class="section__header">
+                    <p class="eyebrow">Contact</p>
+                    <h2>新しいプロジェクトのご相談をお待ちしています</h2>
                 </header>
-                <form class="settings-form">
-                    <fieldset>
-                        <legend>通知</legend>
-                        <label class="toggle">
-                            <input type="checkbox" checked>
-                            <span class="toggle__indicator"></span>
-                            新作コレクションの通知を受け取る
-                        </label>
-                        <label class="toggle">
-                            <input type="checkbox">
-                            <span class="toggle__indicator"></span>
-                            プリセットのアップデート情報
-                        </label>
-                    </fieldset>
-                    <fieldset>
-                        <legend>言語</legend>
-                        <div class="select">
-                            <select>
-                                <option>日本語</option>
-                                <option>English</option>
-                                <option>中文</option>
-                            </select>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>プロファイル</legend>
-                        <label class="text-field">
-                            <span>メールアドレス</span>
-                            <input type="email" value="hello@lingmulongtai.com">
-                        </label>
-                        <label class="text-field">
-                            <span>ポートフォリオURL</span>
-                            <input type="url" value="https://lingmulongtai.com">
-                        </label>
-                    </fieldset>
-                    <div class="settings-form__actions">
-                        <button type="submit" class="btn btn--primary">保存する</button>
-                        <button type="button" class="btn btn--ghost">キャンセル</button>
-                    </div>
-                </form>
+                <div class="contact__grid">
+                    <article>
+                        <h3>Direct Contact</h3>
+                        <p>Email: <a href="mailto:hello@lingmulongtai.com">hello@lingmulongtai.com</a></p>
+                        <p>Phone: <a href="tel:+81300001111">+81 3 0000 1111</a></p>
+                        <p>Social: @lingmulongtai</p>
+                    </article>
+                    <article>
+                        <h3>Project Brief</h3>
+                        <form class="contact-form">
+                            <label>
+                                <span>お名前</span>
+                                <input type="text" placeholder="Your Name">
+                            </label>
+                            <label>
+                                <span>メール</span>
+                                <input type="email" placeholder="name@example.com">
+                            </label>
+                            <label>
+                                <span>プロジェクト概要</span>
+                                <textarea rows="4" placeholder="撮影内容やスケジュールなど"></textarea>
+                            </label>
+                            <button type="submit" class="btn btn--primary">Send Message</button>
+                        </form>
+                    </article>
+                </div>
             </section>
         </main>
+
+        <aside class="sidebar-right" aria-label="クイックアクセス">
+            <ul>
+                <li><a href="#home" aria-label="Home">🏠</a></li>
+                <li><a href="#about" aria-label="About">👤</a></li>
+                <li><a href="#resume" aria-label="Resume">📄</a></li>
+                <li><a href="#portfolio" aria-label="Portfolio">🗂️</a></li>
+                <li><a href="#testimonials" aria-label="Testimonials">💬</a></li>
+                <li><a href="#contact" aria-label="Contact">📞</a></li>
+            </ul>
+        </aside>
     </div>
 
     <script src="app.js" defer></script>
