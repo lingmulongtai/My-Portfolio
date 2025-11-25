@@ -19,7 +19,7 @@
     --shadow-xl: 0 24px 60px rgba(0, 0, 0, 0.45);
     --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.3);
     --sidebar-width: clamp(15rem, 18vw, 17rem);
-    --glass-bg: rgba(255, 255, 255, 0.2);
+    --glass-bg: rgba(255, 255, 255, 0.4);
     --glass-border: rgba(255, 255, 255, 0.2);
     --glass-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -29,12 +29,12 @@
 }
 
 .glass {
-    background-color: var(--glass-bg);
+    background-color: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: 20px;
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 body {
@@ -771,7 +771,7 @@ legend {
     --radius-lg: 24px;
     --radius-md: 16px;
     --radius-sm: 10px;
-    --glass-bg: rgba(255, 255, 255, 0.2);
+    --glass-bg: rgba(255, 255, 255, 0.4);
     --glass-border: rgba(255, 255, 255, 0.2);
     --glass-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -782,12 +782,7 @@ html {
 
 body {
     font-family: "Poppins", "Space Grotesk", "Segoe UI", sans-serif;
-    background-image: linear-gradient(rgba(19, 20, 28, 0.65), rgba(19, 20, 28, 0.65)),
-        url("photos/urban.jpeg");
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: url("photos/urban.jpeg") center/cover fixed;
     color: var(--gray-900);
     min-height: 100vh;
     margin: 0;
@@ -809,8 +804,8 @@ body {
     flex-direction: column;
     gap: 2rem;
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: 1rem;
+    height: calc(100vh - 2rem);
 }
 
 .profile-card {
@@ -1398,11 +1393,14 @@ body {
     border-left: 1px solid var(--gray-100);
     background: #fff;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: 25rem;
+    height: calc(100vh - 45rem);
+    padding: 1rem 0;
+    align-self: start;
 }
 
 .sidebar-right ul {
@@ -1415,6 +1413,7 @@ body {
 
 .sidebar-right a {
     width: 46px;
+    align-self: flex-start;
     height: 46px;
     border-radius: 50%;
     display: grid;
