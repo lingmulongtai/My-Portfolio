@@ -1,6 +1,4 @@
-# Ryuta Suzuki — Unsplash-driven Portfolio
-
-東京拠点フォトグラファー Ryuta Suzuki のためのワンページサイトです。左サイドバーと固定クイックリンクでスクロールをサポートしつつ、@srtgraphy の Unsplash フィードから呼び出したギャラリーと Lightroom プリセットの配布セクションを実装しています。
+# Photogrphy Portfolio
 
 ## ファイル構成
 - `index.html` — ヒーロー、About、Resume、Gallery、Presets、Testimonials、Contact の順で構成。
@@ -20,12 +18,6 @@
 1. このフォルダーをローカルに配置します。
 2. 最新の Chromium / Firefox / Safari 等で `index.html` を開きます。
 3. ギャラリー画像は Unsplash からライブ取得するため、インターネット接続が必要です。
-
-PowerShell から開くときの例:
-
-```powershell
-Start-Process .\index.html
-```
 
 ## カスタマイズのヒント
 - 別の Unsplash ユーザーを使う場合は `index.html` 内の `source.unsplash.com/user/...` を一括置換してください（`sig` パラメータでキャッシュを回避）。
