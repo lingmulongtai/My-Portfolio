@@ -2,12 +2,17 @@
   "name": "ryuta-suzuki-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Static portfolio for Ryuta Suzuki with live Unsplash gallery.",
   "scripts": {
-    "dev": "live-server --open=./index.html --port=4173 --host=0.0.0.0",
-    "start": "live-server --port=8080 --host=0.0.0.0 --no-browser"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "live-server": "^1.2.2"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.2"
   }
 }
