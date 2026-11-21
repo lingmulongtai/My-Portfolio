@@ -1,106 +1,139 @@
 import React from 'react';
-import { PHOTOS, CATEGORIES } from '../data/photos.js';
+import { PHOTOS } from '../data/photos.js';
 import Lightbox from './Lightbox.jsx';
+import { EditIcon } from './Icons.jsx';
 
-export default function Works({ filter, setFilter, adminMode, onEdit }) {
-  const [sort, setSort] = React.useState('newest');
+export default function Works({ filter, setFilter, adminMode, onEdit, customPhotos = [] }) {
+  const [sort, setSort] = React.useState('curated');
   const [lbIndex, setLbIndex] = React.useState(null);
 
-  const filtered = React.useMemo(() => {
-    let arr = filter === 'All' ? [...PHOTOS] : PHOTOS.filter(p => p.category === filter);
-    if (sort === 'popular') arr = [...arr].reverse();
-    return arr;
-  }, [filter, sort]);
+  const allPhotos = React.useMemo(() => [...PHOTOS, ...customPhotos], [customPhotos]);
+  const categories = React.useMemo(
+    () => ['All', ...new Set(allPhotos.map((p) => p.category).filter(Boolean))],
+    [allPhotos]
+  );
 
-  const countFor = (cat) => cat === 'All' ? PHOTOS.length : PHOTOS.filter(p => p.category === cat).length;
+  const filtered = React.useMemo(() => {
+    const list = filter === 'All' ? [...allPhotos] : allPhotos.filter((p) => p.category === filter);
+    if (sort === 'featured') {
+      return list.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
+    }
+    return list;
+  }, [allPhotos, filter, sort]);
+
+  const countFor = (cat) =>
+    cat === 'All' ? allPhotos.length : allPhotos.filter((p) => p.category === cat).length;
 
   const openLb = (photo) => {
-    const idx = filtered.indexOf(photo);
-    setLbIndex(idx);
+    const idx = filtered.findIndex((p) => p.id === photo.id);
+    if (idx >= 0) setLbIndex(idx);
   };
 
   return (
-    <section className="section" id="works" aria-label="Photography works">
-      <div className="section-inner">
-        <div className="section-header">
-          <p className="section-eyebrow">Portfolio</p>
-          <h2>Selected Works</h2>
-          <p>A curated selection of street, portrait, and architectural photography from Tokyo.</p>
-        </div>
+    <section className="section" id="works" aria-labelledby="works-heading">
+      <div className="container">
+        <header className="page-header">
+          <div>
+            <h1 id="works-heading">Selected Works</h1>
+            <p className="page-lead">
+              Street, portrait, and architectural frames photographed across Tokyo.
+            </p>
+          </div>
+          <span className="page-counter">
+            {String(filtered.length).padStart(2, '0')} / {String(allPhotos.length).padStart(2, '0')} frames
+          </span>
+        </header>
 
-        <div className="works-controls">
+        <div className="works-toolbar">
           <div className="filter-bar" role="group" aria-label="Filter by category">
-            <span className="filter-bar-label">Filter</span>
-            {CATEGORIES.map(cat => (
+            {categories.map((cat) => (
               <button
                 key={cat}
+                type="button"
                 className={`filter-btn${filter === cat ? ' active' : ''}`}
                 onClick={() => setFilter(cat)}
                 aria-pressed={filter === cat}
               >
-                {cat} ({countFor(cat)})
+                <span>{cat}</span>
+                <span className="filter-count">{countFor(cat)}</span>
               </button>
             ))}
           </div>
-          <div className="sort-bar" role="group" aria-label="Sort photos">
-            <span className="filter-bar-label">Sort</span>
-            {['newest', 'popular'].map(s => (
+
+          <div className="sort-bar" role="group" aria-label="Sort photographs">
+            {[
+              { key: 'curated', label: 'Curated order' },
+              { key: 'featured', label: 'Featured first' },
+            ].map((item) => (
               <button
-                key={s}
-                className={`sort-btn${sort === s ? ' active' : ''}`}
-                onClick={() => setSort(s)}
-                aria-pressed={sort === s}
+                key={item.key}
+                type="button"
+                className={`sort-btn${sort === item.key ? ' active' : ''}`}
+                onClick={() => setSort(item.key)}
+                aria-pressed={sort === item.key}
               >
-                {s === 'newest' ? 'Newest' : 'Popular'}
+                {item.label}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="photo-grid" role="list">
-          {filtered.map((photo) => (
-            <article
-              key={photo.id}
-              className="photo-card"
-              role="listitem"
-              onClick={() => openLb(photo)}
-              tabIndex={0}
-              onKeyDown={e => e.key === 'Enter' && openLb(photo)}
-              aria-label={`Open ${photo.title}`}
-            >
-              {photo.featured && <span className="featured-dot" aria-hidden="true" />}
-              <img
-                className="photo-card-img"
-                src={photo.thumb}
-                alt={photo.alt}
-                loading="lazy"
-              />
-              <div className="photo-card-body">
-                <div className="photo-card-title">{photo.title}</div>
-                <div className="photo-card-meta">
-                  <span className="tag-category">{photo.category}</span>
-                  <span className={`badge badge-${photo.license}`}>
-                    {photo.license === 'free' ? 'Free' : 'Paid'}
-                  </span>
+        {filtered.length > 0 ? (
+          <div className="photo-grid" role="list">
+            {filtered.map((photo, idx) => (
+              <figure
+                key={photo.id}
+                className={`photo-card${photo.featured && filter === 'All' && idx === 0 ? ' photo-card-wide' : ''}`}
+                role="listitem"
+              >
+                <div className="photo-card-media">
+                  <button
+                    type="button"
+                    className="photo-card-trigger"
+                    onClick={() => openLb(photo)}
+                    aria-label={`Open ${photo.title} in lightbox`}
+                  >
+                    <img
+                      className="photo-card-img"
+                      src={photo.url || photo.thumb}
+                      alt={photo.alt || photo.title}
+                      width={800}
+                      height={600}
+                      loading={idx < 3 ? 'eager' : 'lazy'}
+                    />
+                  </button>
+                  {adminMode && (
+                    <button
+                      type="button"
+                      className="photo-card-edit"
+                      onClick={() => onEdit(photo)}
+                      aria-label={`Manage ${photo.title}`}
+                    >
+                      <EditIcon />
+                    </button>
+                  )}
                 </div>
-              </div>
-              {adminMode && (
-                <button
-                  className="photo-card-edit"
-                  onClick={e => { e.stopPropagation(); onEdit(photo); }}
-                  aria-label={`Edit ${photo.title}`}
-                  title="Edit photo"
-                >
-                  ✏️
-                </button>
-              )}
-            </article>
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
+                <figcaption className="photo-card-body">
+                  <div className="photo-card-head">
+                    <span className="photo-card-title">{photo.title}</span>
+                    <span className={`license-tag ${photo.license === 'free' ? 'free' : 'paid'}`}>
+                      {photo.license === 'free' ? 'Free Use' : 'Licensed'}
+                    </span>
+                  </div>
+                  <div className="photo-card-meta">
+                    <span>{photo.category}</span>
+                    {photo.exif && <span className="photo-card-exif">{photo.exif}</span>}
+                  </div>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        ) : (
           <div className="empty-state">
-            <p>No photos found for this filter.</p>
+            <p>No photographs match this category yet.</p>
+            <button type="button" className="btn-secondary" onClick={() => setFilter('All')}>
+              Show all frames
+            </button>
           </div>
         )}
       </div>
@@ -110,8 +143,8 @@ export default function Works({ filter, setFilter, adminMode, onEdit }) {
           photos={filtered}
           index={lbIndex}
           onClose={() => setLbIndex(null)}
-          onPrev={() => setLbIndex(i => Math.max(0, i - 1))}
-          onNext={() => setLbIndex(i => Math.min(filtered.length - 1, i + 1))}
+          onPrev={() => setLbIndex((i) => Math.max(0, i - 1))}
+          onNext={() => setLbIndex((i) => Math.min(filtered.length - 1, i + 1))}
         />
       )}
     </section>

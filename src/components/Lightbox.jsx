@@ -1,18 +1,19 @@
 import React from 'react';
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from './Icons.jsx';
 
 export default function Lightbox({ photos, index, onClose, onPrev, onNext }) {
   const photo = photos[index];
   const hasPrev = index > 0;
   const hasNext = index < photos.length - 1;
 
-  // Scroll lock
   React.useEffect(() => {
-    const prev = document.body.style.overflow;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
   }, []);
 
-  // Keyboard nav
   React.useEffect(() => {
     const handler = (e) => {
       if (e.key === 'Escape') onClose();
@@ -23,26 +24,31 @@ export default function Lightbox({ photos, index, onClose, onPrev, onNext }) {
     return () => window.removeEventListener('keydown', handler);
   }, [hasPrev, hasNext, onClose, onPrev, onNext]);
 
-  // Focus trap
   const dialogRef = React.useRef(null);
   const closeRef = React.useRef(null);
+
   React.useEffect(() => {
     closeRef.current?.focus();
     const el = dialogRef.current;
     if (!el) return;
-    const focusable = el.querySelectorAll('button, [tabindex="0"]');
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
     const trap = (e) => {
       if (e.key !== 'Tab') return;
-      if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } }
-      else { if (document.activeElement === last) { e.preventDefault(); first.focus(); } }
+      const focusable = el.querySelectorAll('button:not([disabled])');
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     el.addEventListener('keydown', trap);
     return () => el.removeEventListener('keydown', trap);
   }, [index]);
 
-  // Preload next image
   React.useEffect(() => {
     if (hasNext) {
       const img = new Image();
@@ -50,63 +56,70 @@ export default function Lightbox({ photos, index, onClose, onPrev, onNext }) {
     }
   }, [index, hasNext, photos]);
 
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) onClose();
-  };
-
   if (!photo) return null;
 
   return (
     <div
       className="lightbox-overlay"
-      onClick={handleOverlayClick}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
       role="dialog"
       aria-modal="true"
-      aria-label={`Photo: ${photo.title}`}
+      aria-label={`Photograph: ${photo.title}`}
       ref={dialogRef}
     >
-      <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-        <img
-          className="lightbox-img"
-          src={photo.url}
-          alt={photo.alt}
-        />
-        <div className="lightbox-info">
-          <div className="lightbox-title">{photo.title}</div>
-          {photo.exif && <div className="lightbox-exif">{photo.exif}</div>}
-          <div className="lightbox-badges">
-            <span className={`badge badge-${photo.license}`}>
-              {photo.license === 'free' ? 'Free Use' : 'Licensed'}
-            </span>
-            {photo.category && <span className="badge" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' }}>{photo.category}</span>}
-          </div>
-          <div className="lightbox-counter">{index + 1} / {photos.length}</div>
-        </div>
+      <div className="lightbox-topbar">
+        <span className="lightbox-counter">
+          {String(index + 1).padStart(2, '0')} / {String(photos.length).padStart(2, '0')}
+        </span>
+        <button
+          ref={closeRef}
+          type="button"
+          className="lightbox-close"
+          onClick={onClose}
+          aria-label="Close lightbox"
+        >
+          <CloseIcon width={18} height={18} />
+        </button>
       </div>
 
-      <button
-        ref={closeRef}
-        className="lightbox-close"
-        onClick={onClose}
-        aria-label="Close lightbox"
-        tabIndex={0}
-      >
-        ✕
-      </button>
-
-      {hasPrev && (
-        <button className="lightbox-prev" onClick={onPrev} aria-label="Previous photo" tabIndex={0}>
-          ‹
+      <div className="lightbox-stage">
+        <button
+          type="button"
+          className="lightbox-nav"
+          onClick={onPrev}
+          disabled={!hasPrev}
+          aria-label="Previous photograph"
+        >
+          <ArrowLeftIcon width={20} height={20} />
         </button>
-      )}
-      {hasNext && (
-        <button className="lightbox-next" onClick={onNext} aria-label="Next photo" tabIndex={0}>
-          ›
-        </button>
-      )}
 
-      <div className="lightbox-kbd" aria-hidden="true">
-        ← → navigate · Esc close
+        <figure className="lightbox-figure">
+          <img className="lightbox-img" src={photo.url} alt={photo.alt || photo.title} />
+          <figcaption className="lightbox-info">
+            <div>
+              <div className="lightbox-title">{photo.title}</div>
+              <div className="lightbox-meta">
+                <span>{photo.category}</span>
+                {photo.exif && <span className="lightbox-exif">{photo.exif}</span>}
+              </div>
+            </div>
+            <span className={`license-tag ${photo.license === 'free' ? 'free' : 'paid'}`}>
+              {photo.license === 'free' ? 'Free Use' : 'Licensed'}
+            </span>
+          </figcaption>
+        </figure>
+
+        <button
+          type="button"
+          className="lightbox-nav"
+          onClick={onNext}
+          disabled={!hasNext}
+          aria-label="Next photograph"
+        >
+          <ArrowRightIcon width={20} height={20} />
+        </button>
       </div>
     </div>
   );

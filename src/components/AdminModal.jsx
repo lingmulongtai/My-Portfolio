@@ -1,132 +1,181 @@
 import React from 'react';
 import { PHOTOS } from '../data/photos.js';
+import { CheckIcon, CloseIcon, GridIcon, PlusIcon } from './Icons.jsx';
 
-const LS_KEY = 'portfolio_custom_photos';
+const EMPTY_FORM = {
+  title: '',
+  category: 'Street',
+  url: '',
+  thumb: '',
+  alt: '',
+  exif: '',
+  license: 'free',
+};
 
-function getCustomPhotos() {
-  try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch { return []; }
-}
-function saveCustomPhotos(arr) {
-  localStorage.setItem(LS_KEY, JSON.stringify(arr));
-}
-
-const EMPTY_FORM = { title: '', category: 'Street', url: '', thumb: '', alt: '', exif: '', license: 'free' };
-
-export default function AdminModal({ onClose }) {
+export default function AdminModal({ customPhotos = [], setCustomPhotos, onClose }) {
   const [tab, setTab] = React.useState('add');
-  const [customPhotos, setCustomPhotos] = React.useState(getCustomPhotos);
   const [form, setForm] = React.useState(EMPTY_FORM);
   const [saved, setSaved] = React.useState(false);
 
-  const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  const handleChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const handleAdd = (e) => {
     e.preventDefault();
-    const newPhoto = { ...form, id: Date.now(), featured: false, tags: [] };
-    const updated = [...customPhotos, newPhoto];
-    setCustomPhotos(updated);
-    saveCustomPhotos(updated);
+    if (!form.title.trim() || !form.url.trim()) return;
+    const newPhoto = {
+      ...form,
+      thumb: form.thumb.trim() || form.url.trim(),
+      alt: form.alt.trim() || form.title.trim(),
+      id: Date.now(),
+      featured: false,
+      tags: [],
+    };
+    setCustomPhotos((prev) => [...prev, newPhoto]);
     setForm(EMPTY_FORM);
     setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    setTimeout(() => setSaved(false), 2400);
   };
 
   const handleDelete = (id) => {
-    const updated = customPhotos.filter(p => p.id !== id);
-    setCustomPhotos(updated);
-    saveCustomPhotos(updated);
+    setCustomPhotos((prev) => prev.filter((p) => p.id !== id));
   };
 
   const allPhotos = [...PHOTOS, ...customPhotos];
-
-  // Trap focus
   const ref = React.useRef(null);
+
   React.useEffect(() => {
     ref.current?.querySelector('button')?.focus();
-    const handler = (e) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  // Scroll lock
-  React.useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
-  }, []);
-
   return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()} role="dialog" aria-modal="true" aria-label="Admin panel">
-      <div className="modal" ref={ref}>
+    <div
+      className="modal-overlay"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="curator-modal-title"
+      ref={ref}
+    >
+      <div className="modal">
         <div className="modal-header">
-          <h2 className="modal-title">🔧 Admin Panel</h2>
-          <button className="modal-close" onClick={onClose} aria-label="Close modal">✕</button>
+          <h2 id="curator-modal-title" className="modal-title">Curator Library</h2>
+          <button
+            type="button"
+            className="modal-close"
+            onClick={onClose}
+            aria-label="Close curator library"
+          >
+            <CloseIcon />
+          </button>
         </div>
 
         <div className="modal-tabs" role="tablist">
-          {['add', 'manage'].map(t => (
-            <button
-              key={t}
-              className={`modal-tab${tab === t ? ' active' : ''}`}
-              role="tab"
-              aria-selected={tab === t}
-              onClick={() => setTab(t)}
-            >
-              {t === 'add' ? '➕ Add Photo' : '🗂 Manage'}
-            </button>
-          ))}
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === 'add'}
+            className={`modal-tab${tab === 'add' ? ' active' : ''}`}
+            onClick={() => setTab('add')}
+          >
+            <PlusIcon width={14} height={14} />
+            <span>Add Frame</span>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === 'manage'}
+            className={`modal-tab${tab === 'manage' ? ' active' : ''}`}
+            onClick={() => setTab('manage')}
+          >
+            <GridIcon width={14} height={14} />
+            <span>Manage ({allPhotos.length})</span>
+          </button>
         </div>
 
         <div className="modal-body">
           {tab === 'add' && (
-            <form onSubmit={handleAdd} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <form onSubmit={handleAdd} className="modal-form">
               {[
-                { name: 'title', label: 'Title', type: 'text', placeholder: 'Photo title' },
-                { name: 'url', label: 'Image URL', type: 'text', placeholder: 'https://...' },
-                { name: 'thumb', label: 'Thumbnail URL', type: 'text', placeholder: 'https://...' },
-                { name: 'alt', label: 'Alt Text', type: 'text', placeholder: 'Describe the image' },
-                { name: 'exif', label: 'EXIF', type: 'text', placeholder: '1/100s · f/2.8 · ISO 400' },
-              ].map(f => (
-                <div className="form-group" key={f.name}>
-                  <label htmlFor={`admin-${f.name}`}>{f.label}</label>
-                  <input id={`admin-${f.name}`} name={f.name} type={f.type} value={form[f.name]} onChange={handleChange} placeholder={f.placeholder} />
+                { name: 'title', label: 'Title', type: 'text', placeholder: 'Shibuya Twilight…', required: true },
+                { name: 'url', label: 'Image URL', type: 'url', placeholder: 'https://…', required: true },
+                { name: 'thumb', label: 'Thumbnail URL (optional)', type: 'url', placeholder: 'https://…' },
+                { name: 'alt', label: 'Alt Text', type: 'text', placeholder: 'Describe the frame…' },
+                { name: 'exif', label: 'EXIF Telemetry', type: 'text', placeholder: '1/100s · f/2.8 · ISO 400' },
+              ].map((field) => (
+                <div className="form-group" key={field.name}>
+                  <label htmlFor={`admin-${field.name}`}>{field.label}</label>
+                  <input
+                    id={`admin-${field.name}`}
+                    name={field.name}
+                    type={field.type}
+                    value={form[field.name]}
+                    onChange={handleChange}
+                    placeholder={field.placeholder}
+                    required={field.required}
+                  />
                 </div>
               ))}
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="admin-category">Category</label>
                   <select id="admin-category" name="category" value={form.category} onChange={handleChange}>
-                    {['Street','Portrait','Urban','Architecture','Landscape'].map(c => <option key={c}>{c}</option>)}
+                    {['Street', 'Portrait', 'Urban', 'Architecture', 'Landscape'].map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-group">
                   <label htmlFor="admin-license">License</label>
                   <select id="admin-license" name="license" value={form.license} onChange={handleChange}>
-                    <option value="free">Free</option>
-                    <option value="paid">Paid</option>
+                    <option value="free">Free Use</option>
+                    <option value="paid">Licensed</option>
                   </select>
                 </div>
               </div>
-              {saved && <div className="form-success">✓ Photo added to local storage!</div>}
-              <button type="submit" className="btn-primary" style={{ alignSelf: 'flex-start' }}>Add Photo</button>
+              {saved && (
+                <div className="form-success" role="status" aria-live="polite">
+                  <CheckIcon />
+                  <span>Frame saved to local gallery.</span>
+                </div>
+              )}
+              <button type="submit" className="btn-primary">
+                Add Frame
+              </button>
             </form>
           )}
 
           {tab === 'manage' && (
-            <div>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-3)', marginBottom: '12px' }}>
-                Showing {allPhotos.length} photos · {customPhotos.length} custom (in localStorage)
+            <div className="manage-wrap">
+              <p className="manage-meta">
+                {allPhotos.length} total frames · {customPhotos.length} saved locally
               </p>
               <div className="photo-list">
-                {allPhotos.map(p => (
-                  <div className="photo-list-item" key={p.id}>
-                    <img src={p.thumb || p.url} alt={p.alt} />
-                    <span className="photo-list-item-title">{p.title}</span>
-                    <span className="badge badge-" style={{ fontSize: '0.68rem', color: 'var(--text-3)' }}>{p.category}</span>
-                    {customPhotos.find(c => c.id === p.id) && (
-                      <button className="photo-list-item-del" onClick={() => handleDelete(p.id)}>Delete</button>
-                    )}
-                  </div>
-                ))}
+                {allPhotos.map((p) => {
+                  const isCustom = customPhotos.some((c) => c.id === p.id);
+                  return (
+                    <div className="photo-list-item" key={p.id}>
+                      <img src={p.thumb || p.url} alt={p.alt || p.title} width={48} height={36} />
+                      <span className="photo-list-item-title">{p.title}</span>
+                      <span className="photo-list-cat">{p.category}</span>
+                      {isCustom && (
+                        <button
+                          type="button"
+                          className="photo-list-item-del"
+                          onClick={() => handleDelete(p.id)}
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
