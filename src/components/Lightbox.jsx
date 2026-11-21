@@ -1,19 +1,22 @@
 import React from 'react';
+import { IconArrowLeft, IconArrowRight, IconClose } from './Icons.jsx';
 
 export default function Lightbox({ photos, index, onClose, onPrev, onNext }) {
   const photo = photos[index];
   const hasPrev = index > 0;
   const hasNext = index < photos.length - 1;
+  const closeRef = React.useRef(null);
 
-  // Scroll lock
   React.useEffect(() => {
-    const prev = document.body.style.overflow;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
   }, []);
 
-  // Keyboard nav
   React.useEffect(() => {
+    closeRef.current?.focus();
     const handler = (e) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft' && hasPrev) onPrev();
@@ -23,90 +26,85 @@ export default function Lightbox({ photos, index, onClose, onPrev, onNext }) {
     return () => window.removeEventListener('keydown', handler);
   }, [hasPrev, hasNext, onClose, onPrev, onNext]);
 
-  // Focus trap
-  const dialogRef = React.useRef(null);
-  const closeRef = React.useRef(null);
-  React.useEffect(() => {
-    closeRef.current?.focus();
-    const el = dialogRef.current;
-    if (!el) return;
-    const focusable = el.querySelectorAll('button, [tabindex="0"]');
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    const trap = (e) => {
-      if (e.key !== 'Tab') return;
-      if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } }
-      else { if (document.activeElement === last) { e.preventDefault(); first.focus(); } }
-    };
-    el.addEventListener('keydown', trap);
-    return () => el.removeEventListener('keydown', trap);
-  }, [index]);
-
-  // Preload next image
   React.useEffect(() => {
     if (hasNext) {
-      const img = new Image();
-      img.src = photos[index + 1].url;
+      const preload = new Image();
+      preload.src = photos[index + 1].url;
     }
   }, [index, hasNext, photos]);
-
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) onClose();
-  };
 
   if (!photo) return null;
 
   return (
     <div
       className="lightbox-overlay"
-      onClick={handleOverlayClick}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
       role="dialog"
       aria-modal="true"
-      aria-label={`Photo: ${photo.title}`}
-      ref={dialogRef}
+      aria-label={photo.title}
     >
-      <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-        <img
-          className="lightbox-img"
-          src={photo.url}
-          alt={photo.alt}
-        />
-        <div className="lightbox-info">
-          <div className="lightbox-title">{photo.title}</div>
-          {photo.exif && <div className="lightbox-exif">{photo.exif}</div>}
-          <div className="lightbox-badges">
-            <span className={`badge badge-${photo.license}`}>
-              {photo.license === 'free' ? 'Free Use' : 'Licensed'}
-            </span>
-            {photo.category && <span className="badge" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' }}>{photo.category}</span>}
+      <div className="lightbox-shell" onClick={(e) => e.stopPropagation()}>
+        <div className="lightbox-bar">
+          <span className="lightbox-counter">
+            Frame {String(index + 1).padStart(2, '0')} / {String(photos.length).padStart(2, '0')}
+          </span>
+          <div className="lightbox-controls">
+            <button
+              type="button"
+              className="icon-btn"
+              onClick={onPrev}
+              disabled={!hasPrev}
+              aria-label="Previous frame"
+            >
+              <IconArrowLeft />
+            </button>
+            <button
+              type="button"
+              className="icon-btn"
+              onClick={onNext}
+              disabled={!hasNext}
+              aria-label="Next frame"
+            >
+              <IconArrowRight />
+            </button>
+            <button
+              ref={closeRef}
+              type="button"
+              className="icon-btn"
+              onClick={onClose}
+              aria-label="Close lightbox"
+            >
+              <IconClose />
+            </button>
           </div>
-          <div className="lightbox-counter">{index + 1} / {photos.length}</div>
         </div>
-      </div>
 
-      <button
-        ref={closeRef}
-        className="lightbox-close"
-        onClick={onClose}
-        aria-label="Close lightbox"
-        tabIndex={0}
-      >
-        ✕
-      </button>
+        <div className="lightbox-frame">
+          <img className="lightbox-img" src={photo.url || photo.thumb} alt={photo.alt} />
+        </div>
 
-      {hasPrev && (
-        <button className="lightbox-prev" onClick={onPrev} aria-label="Previous photo" tabIndex={0}>
-          ‹
-        </button>
-      )}
-      {hasNext && (
-        <button className="lightbox-next" onClick={onNext} aria-label="Next photo" tabIndex={0}>
-          ›
-        </button>
-      )}
+        <div className="lightbox-foot">
+          <div className="lightbox-meta-left">
+            <div className="lightbox-title">{photo.title}</div>
+            <div className="lightbox-sub">
+              {photo.exif && <span className="exif-mono">{photo.exif}</span>}
+              <span className="work-card-cat">{photo.category}</span>
+              <span className={`license-text ${photo.license}`}>
+                {photo.license === 'free' ? 'Free use' : 'Licensed'}
+              </span>
+            </div>
+          </div>
 
-      <div className="lightbox-kbd" aria-hidden="true">
-        ← → navigate · Esc close
+          <div className="kbd-hints" aria-hidden="true">
+            <span className="kbd">←</span>
+            <span className="kbd">→</span>
+            <span>Navigate</span>
+            <span className="kbd">Esc</span>
+            <span>Close</span>
+          </div>
+        </div>
       </div>
     </div>
   );
