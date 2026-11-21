@@ -1,97 +1,124 @@
 import React from 'react';
-import { PHOTOS, CATEGORIES } from '../data/photos.js';
 import Lightbox from './Lightbox.jsx';
+import { IconPencil } from './Icons.jsx';
 
-export default function Works({ filter, setFilter, adminMode, onEdit }) {
+export default function Works({ photos, filter, setFilter, curatorMode, onEdit }) {
   const [sort, setSort] = React.useState('newest');
   const [lbIndex, setLbIndex] = React.useState(null);
 
+  const categories = React.useMemo(
+    () => ['All', ...new Set(photos.map((p) => p.category))],
+    [photos]
+  );
+
   const filtered = React.useMemo(() => {
-    let arr = filter === 'All' ? [...PHOTOS] : PHOTOS.filter(p => p.category === filter);
-    if (sort === 'popular') arr = [...arr].reverse();
+    let arr = filter === 'All' ? [...photos] : photos.filter((p) => p.category === filter);
+    if (sort === 'curated') arr = [...arr].reverse();
     return arr;
-  }, [filter, sort]);
+  }, [photos, filter, sort]);
 
-  const countFor = (cat) => cat === 'All' ? PHOTOS.length : PHOTOS.filter(p => p.category === cat).length;
+  const countFor = (cat) =>
+    cat === 'All' ? photos.length : photos.filter((p) => p.category === cat).length;
 
-  const openLb = (photo) => {
-    const idx = filtered.indexOf(photo);
-    setLbIndex(idx);
+  const spanClass = (index) => {
+    if (filtered.length <= 2) return 'medium';
+    if (index === 0) return 'wide';
+    if (index === 4 || index === 5) return 'medium';
+    return '';
   };
 
   return (
-    <section className="section" id="works" aria-label="Photography works">
-      <div className="section-inner">
-        <div className="section-header">
-          <p className="section-eyebrow">Portfolio</p>
-          <h2>Selected Works</h2>
-          <p>A curated selection of street, portrait, and architectural photography from Tokyo.</p>
-        </div>
+    <section className="page-section" id="works" aria-label="Selected works">
+      <div className="wrap">
+        <header className="page-head">
+          <h1 className="page-title">Selected works</h1>
+          <p className="page-lead">
+            Street, portrait, and architectural frames captured across Tokyo, indexed with camera exposure notes
+          </p>
+        </header>
 
-        <div className="works-controls">
-          <div className="filter-bar" role="group" aria-label="Filter by category">
-            <span className="filter-bar-label">Filter</span>
-            {CATEGORIES.map(cat => (
+        <div className="works-toolbar">
+          <div className="filter-group" role="group" aria-label="Filter by category">
+            {categories.map((cat) => (
               <button
+                type="button"
                 key={cat}
-                className={`filter-btn${filter === cat ? ' active' : ''}`}
+                className={`seg-btn${filter === cat ? ' active' : ''}`}
                 onClick={() => setFilter(cat)}
                 aria-pressed={filter === cat}
               >
-                {cat} ({countFor(cat)})
+                <span>{cat}</span>
+                <span className="seg-count">{countFor(cat)}</span>
               </button>
             ))}
           </div>
-          <div className="sort-bar" role="group" aria-label="Sort photos">
-            <span className="filter-bar-label">Sort</span>
-            {['newest', 'popular'].map(s => (
+
+          <div className="sort-group" role="group" aria-label="Sort frames">
+            {[
+              { key: 'newest', label: 'Chronological' },
+              { key: 'curated', label: 'Reverse order' },
+            ].map((item) => (
               <button
-                key={s}
-                className={`sort-btn${sort === s ? ' active' : ''}`}
-                onClick={() => setSort(s)}
-                aria-pressed={sort === s}
+                type="button"
+                key={item.key}
+                className={`seg-btn${sort === item.key ? ' active' : ''}`}
+                onClick={() => setSort(item.key)}
+                aria-pressed={sort === item.key}
               >
-                {s === 'newest' ? 'Newest' : 'Popular'}
+                {item.label}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="photo-grid" role="list">
-          {filtered.map((photo) => (
+        <div className="works-grid" role="list">
+          {filtered.map((photo, idx) => (
             <article
               key={photo.id}
-              className="photo-card"
+              className={`work-card ${spanClass(idx)}`}
               role="listitem"
-              onClick={() => openLb(photo)}
+              onClick={() => setLbIndex(idx)}
               tabIndex={0}
-              onKeyDown={e => e.key === 'Enter' && openLb(photo)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setLbIndex(idx);
+                }
+              }}
               aria-label={`Open ${photo.title}`}
             >
-              {photo.featured && <span className="featured-dot" aria-hidden="true" />}
-              <img
-                className="photo-card-img"
-                src={photo.thumb}
-                alt={photo.alt}
-                loading="lazy"
-              />
-              <div className="photo-card-body">
-                <div className="photo-card-title">{photo.title}</div>
-                <div className="photo-card-meta">
-                  <span className="tag-category">{photo.category}</span>
-                  <span className={`badge badge-${photo.license}`}>
-                    {photo.license === 'free' ? 'Free' : 'Paid'}
+              <div className="work-card-media">
+                <img src={photo.url || photo.thumb} alt={photo.alt} loading="lazy" />
+              </div>
+
+              <div className="work-card-body">
+                <div className="work-card-top">
+                  <div className="work-card-title">
+                    <span className="frame-num">{String(idx + 1).padStart(2, '0')}</span>
+                    <span>{photo.title}</span>
+                  </div>
+                  <span className="work-card-cat">{photo.category}</span>
+                </div>
+                <div className="work-card-meta">
+                  <span className="exif-mono">{photo.exif || 'EXIF unavailable'}</span>
+                  <span className={`license-text ${photo.license}`}>
+                    {photo.license === 'free' ? 'Free use' : 'Licensed'}
                   </span>
                 </div>
               </div>
-              {adminMode && (
+
+              {curatorMode && (
                 <button
-                  className="photo-card-edit"
-                  onClick={e => { e.stopPropagation(); onEdit(photo); }}
+                  type="button"
+                  className="work-card-edit"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit(photo);
+                  }}
                   aria-label={`Edit ${photo.title}`}
-                  title="Edit photo"
+                  title="Edit frame"
                 >
-                  ✏️
+                  <IconPencil />
                 </button>
               )}
             </article>
@@ -100,7 +127,7 @@ export default function Works({ filter, setFilter, adminMode, onEdit }) {
 
         {filtered.length === 0 && (
           <div className="empty-state">
-            <p>No photos found for this filter.</p>
+            <p>No frames match this category</p>
           </div>
         )}
       </div>
@@ -110,8 +137,8 @@ export default function Works({ filter, setFilter, adminMode, onEdit }) {
           photos={filtered}
           index={lbIndex}
           onClose={() => setLbIndex(null)}
-          onPrev={() => setLbIndex(i => Math.max(0, i - 1))}
-          onNext={() => setLbIndex(i => Math.min(filtered.length - 1, i + 1))}
+          onPrev={() => setLbIndex((i) => Math.max(0, i - 1))}
+          onNext={() => setLbIndex((i) => Math.min(filtered.length - 1, i + 1))}
         />
       )}
     </section>
