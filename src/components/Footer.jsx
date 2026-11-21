@@ -1,21 +1,42 @@
 import React from 'react';
+import { SlidersIcon } from './Icons.jsx';
 
-export default function Footer({ adminMode, setAdminMode, setShowAdmin }) {
+export default function Footer({ setPage, adminMode, setAdminMode, setShowAdmin }) {
   return (
     <footer className="footer" role="contentinfo">
       <div className="footer-inner">
-        <span className="footer-copy">© 2024 Ryuta Suzuki · All rights reserved</span>
-        <div className="footer-links">
-          <span className="footer-link">Privacy</span>
-          <span className="footer-link">Instagram</span>
-          <span className="footer-link">Twitter/X</span>
-        </div>
+        <span className="footer-copy">© {new Date().getFullYear()} Ryuta Suzuki · Tokyo Photography</span>
+
+        <nav className="footer-links" aria-label="Footer navigation">
+          <button type="button" className="footer-link" onClick={() => setPage('works')}>
+            Works
+          </button>
+          <button type="button" className="footer-link" onClick={() => setPage('presets')}>
+            Presets
+          </button>
+          <button type="button" className="footer-link" onClick={() => setPage('journal')}>
+            Journal
+          </button>
+          <button type="button" className="footer-link" onClick={() => setPage('contact')}>
+            Contact
+          </button>
+        </nav>
+
         <button
-          className={`footer-dev${adminMode ? ' active' : ''}`}
-          onClick={() => { setAdminMode(v => !v); if (!adminMode) setShowAdmin(true); }}
-          aria-label="Toggle developer mode"
+          type="button"
+          className={`footer-curator${adminMode ? ' active' : ''}`}
+          onClick={() => {
+            if (!adminMode) {
+              setAdminMode(true);
+              setShowAdmin(true);
+            } else {
+              setShowAdmin(true);
+            }
+          }}
+          aria-label="Open curator photo manager"
         >
-          🔧 Dev Mode: {adminMode ? 'ON' : 'OFF'}
+          <SlidersIcon width={14} height={14} />
+          <span>Curator</span>
         </button>
       </div>
     </footer>

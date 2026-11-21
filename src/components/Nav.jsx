@@ -1,4 +1,5 @@
 import React from 'react';
+import { CloseIcon, MenuIcon } from './Icons.jsx';
 
 const LINKS = [
   { label: 'Home', page: 'home' },
@@ -9,64 +10,81 @@ const LINKS = [
   { label: 'Contact', page: 'contact' },
 ];
 
-export default function Nav({ page, setPage, adminMode, setAdminMode }) {
+export default function Nav({ page, setPage }) {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  const nav = (p) => {
-    setPage(p);
+  React.useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
+  const navigate = (target) => {
+    setPage(target);
     setMenuOpen(false);
   };
 
   return (
-    <>
-      <nav className="nav" role="navigation" aria-label="Main navigation">
-        <div className="nav-inner">
-          <div className="nav-logo" onClick={() => nav('home')} role="button" tabIndex={0} onKeyDown={e => e.key === 'Enter' && nav('home')} aria-label="Go to home">
-            <div className="nav-monogram">RS</div>
-            <span className="nav-name">Ryuta Suzuki</span>
-          </div>
-          <ul className="nav-links" role="list">
-            {LINKS.map(l => (
-              <li key={l.page}>
+    <header className="site-header">
+      <div className="nav-inner">
+        <button
+          type="button"
+          className="nav-brand"
+          onClick={() => navigate('home')}
+          aria-label="Ryuta Suzuki Photography — Home"
+        >
+          <span className="nav-mark" aria-hidden="true">RS</span>
+          <span className="nav-name">Ryuta Suzuki</span>
+        </button>
+
+        <nav aria-label="Main navigation">
+          <ul className="nav-links">
+            {LINKS.map((item) => (
+              <li key={item.page}>
                 <button
-                  className={page === l.page ? 'active' : ''}
-                  onClick={() => nav(l.page)}
-                  aria-current={page === l.page ? 'page' : undefined}
+                  type="button"
+                  className={page === item.page ? 'active' : ''}
+                  onClick={() => navigate(item.page)}
+                  aria-current={page === item.page ? 'page' : undefined}
                 >
-                  {l.label}
+                  {item.label}
                 </button>
               </li>
             ))}
           </ul>
-          <button
-            className={`nav-admin-btn${adminMode ? ' active' : ''}`}
-            onClick={() => setAdminMode(v => !v)}
-            aria-pressed={adminMode}
-          >
-            🔧 {adminMode ? 'Dev: ON' : 'Dev: OFF'}
-          </button>
-          <button
-            className="nav-hamburger"
-            onClick={() => setMenuOpen(v => !v)}
-            aria-expanded={menuOpen}
-            aria-label="Toggle menu"
-          >
-            <span /><span /><span />
-          </button>
-        </div>
-      </nav>
-      <div className={`nav-mobile-menu${menuOpen ? ' open' : ''}`} role="menu">
-        {LINKS.map(l => (
-          <button
-            key={l.page}
-            className={page === l.page ? 'active' : ''}
-            onClick={() => nav(l.page)}
-            role="menuitem"
-          >
-            {l.label}
-          </button>
-        ))}
+        </nav>
+
+        <button
+          type="button"
+          className="nav-hamburger"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav-drawer"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        >
+          {menuOpen ? <CloseIcon width={20} height={20} /> : <MenuIcon />}
+        </button>
       </div>
-    </>
+
+      {menuOpen && (
+        <nav id="mobile-nav-drawer" className="nav-mobile-menu" aria-label="Mobile navigation">
+          {LINKS.map((item) => (
+            <button
+              key={item.page}
+              type="button"
+              className={page === item.page ? 'active' : ''}
+              onClick={() => navigate(item.page)}
+              aria-current={page === item.page ? 'page' : undefined}
+            >
+              <span>{item.label}</span>
+              <span className="nav-mobile-dot" aria-hidden="true" />
+            </button>
+          ))}
+        </nav>
+      )}
+    </header>
   );
 }
